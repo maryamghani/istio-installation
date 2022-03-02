@@ -23,3 +23,7 @@ for accessing monitoring tools:
 
     ```kubectl port-forward svc/grafana -n istio-system 3000/3000```
 3. and you can access it via: https://localhost:3000
+---
+Refrences:
+https://istio.io/latest/docs/setup/getting-started/#download
+https://github.com/GoogleCloudPlatform/microservices-demo/blob/main/release/kubernetes-manifests.yaml
