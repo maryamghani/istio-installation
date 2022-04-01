@@ -1,14 +1,15 @@
-VERSION:= $(shell istioctl version | awk '{print $$3; exit}')
+VERSION := $(shell istioctl version | awk '{print $$3; exit}')
 
 install:
-
 # Download Istio(https://istio.io/latest/docs/setup/getting-started/#download)
-ifneq "$(wildcard istio-$(VERSION) )" ""
-	  	# if directory istio exists:
-		@echo "istio-$(VERSION) directoy already exists"
+
+ifneq ($(wildcard istio-$(VERSION)),)
+	@echo "Found istio with $(VERSION) version"
 else
-		curl -L https://istio.io/downloadIstio | sh -
-  		export PATH=$PWD/bin:$PATH
+	@echo "Did not find istio $(VERSION)"
+	curl -L https://istio.io/downloadIstio | sh -
+	cd istio-*
+	export PATH=$PWD/bin:$PATH
 endif
 
 	# this will install Istio core and ingress gateways
@@ -19,7 +20,6 @@ endif
 
 	# install example application
 	kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/release/kubernetes-manifests.yaml
-
 	# Add monitoring
 	sleep 2
 	@echo istioctl version is: $(VERSION)
